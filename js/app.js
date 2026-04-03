@@ -2,8 +2,8 @@
    WAMAN-AHYAHA DONATION TRACKER — MAIN APPLICATION
    ============================================================ */
 const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-  ? 'http://localhost:3000'
-  : 'https://al-ayn-backend-temp.onrender.com';
+  ? 'http://localhost:7860'
+  : 'https://mohammed-farhood-al-ayn-backend.hf.space';
 
 const App = {
   currentView: 'landing',

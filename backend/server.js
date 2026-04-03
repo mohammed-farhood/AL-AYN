@@ -5,7 +5,7 @@ const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 7860;
 
 // ─────────────────────────────────────────────────────────
 // SECURITY MIDDLEWARE
