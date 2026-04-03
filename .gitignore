@@ -1,0 +1,6 @@
+node_modules
+.env
+backend/node_modules
+backend/.env
+auth_codes.json
+.DS_Store
