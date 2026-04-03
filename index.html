@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="منصة متابعة التبرعات الشهرية لكفالة الأيتام — ومن أحياها">
+  <meta name="theme-color" content="#2A8FA0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ومن أحياها">
+  <link rel="manifest" href="manifest.json">
+  <title>ومن أحياها — متابعة التبرعات</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="css/main.css?v=11">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+<body>
+
+  <!-- ===== TOP NAVIGATION ===== -->
+  <nav class="top-nav" id="top-nav">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="btn btn-icon btn-ghost" onclick="App.goBack()" title="رجوع" id="btn-back" style="display:none;margin-right:-8px">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div class="nav-brand" onclick="App.navigate(Auth.isLoggedIn() ? 'home' : 'landing')">
+        <div class="nav-brand-logo">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-title" id="nav-title">ومن أحياها</span>
+        </div>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <button class="btn btn-icon btn-ghost" onclick="App.handleLogout()" title="تسجيل الخروج" id="btn-logout" style="display:none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+      <button class="btn btn-icon btn-ghost" id="btn-theme" onclick="App.toggleTheme()" title="تبديل المظهر">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== TOASTS ===== -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content" id="main-content">
+    <div class="view" id="view-landing"></div>
+    <div class="view" id="view-login"></div>
+    <div class="view" id="view-register"></div>
+    <div class="view" id="view-home"></div>
+    <div class="view" id="view-grid"></div>
+    <div class="view" id="view-news"></div>
+    <div class="view" id="view-leaderboard"></div>
+    <div class="view" id="view-collectors"></div>
+    <div class="view" id="view-profile"></div>
+    <div class="view" id="view-newcampaign"></div>
+    <div class="view" id="view-institution"></div>
+    <div class="view" id="view-orphans"></div>
+  </main>
+
+  <!-- ===== BOTTOM NAVIGATION ===== -->
+  <nav class="bottom-nav hidden" id="bottom-nav">
+    <button class="nav-item" data-view="home">
+      <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+      <span>الرئيسية</span>
+    </button>
+    <button class="nav-item" data-view="grid">
+      <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></span>
+      <span>التبرعات</span>
+    </button>
+    <button class="nav-item" data-view="collectors">
+      <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+      <span>المسؤولون</span>
+    </button>
+    <button class="nav-item" data-view="institution">
+      <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M9 8h1"/><path d="M9 12h1"/><path d="M9 16h1"/><path d="M14 8h1"/><path d="M14 12h1"/><path d="M14 16h1"/><path d="M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16"/></svg></span>
+      <span>حساب العين</span>
+    </button>
+    <button class="nav-item" data-view="news">
+      <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6z"/></svg></span>
+      <span>الأخبار</span>
+    </button>
+    <button class="nav-item" data-view="profile">
+      <span class="nav-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+      <span>حسابي</span>
+    </button>
+  </nav>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)App.closeModal()">
+    <div class="modal" id="modal-content"></div>
+  </div>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="js/icons.js?v=11"></script>
+  <script src="js/data.js?v=11"></script>
+  <script src="js/auth.js?v=11"></script>
+  <script>
+    if(localStorage.getItem('wahyaha_app_version') !== '3.3.0') {
+      localStorage.clear();
+      localStorage.setItem('wahyaha_app_version', '3.3.0');
+    }
+  </script>
+  <script src="js/app.js?v=11"></script>
+</body>
+</html>
