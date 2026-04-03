@@ -19,8 +19,7 @@ const allowedOrigins = [
   'http://127.0.0.1:8080',
   'http://127.0.0.1:5500',
   'http://127.0.0.1:8081',
-  // Add your production domain below:
-  // 'https://yourdomain.com',
+  'https://mohammed-farhood.github.io'
 ];
 app.use(cors({
   origin: (origin, callback) => {

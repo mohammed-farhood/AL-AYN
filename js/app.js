@@ -1,6 +1,9 @@
 /* ============================================================
    WAMAN-AHYAHA DONATION TRACKER — MAIN APPLICATION
    ============================================================ */
+const API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+  ? 'http://localhost:3000'
+  : 'https://al-ayn-backend-temp.onrender.com';
 
 const App = {
   currentView: 'landing',
@@ -857,7 +860,7 @@ const App = {
     if (!paid) {
       const donor = DB.getUser(userId);
       if (donor && donor.telegramChatId) {
-        fetch('http://localhost:3000/api/send-receipt', {
+        fetch(`${API_BASE_URL}/api/send-receipt`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'x-api-key': 'alayn_secret_2026_x7k9m2' },
           body: JSON.stringify({
@@ -945,7 +948,7 @@ const App = {
       if (existingUser.telegramChatId) {
         const collector = DB.getUser(collectorId);
         const msg = `مرحباً ${existingUser.name}،\n\nتم إضافتك إلى قائمة المتبرعين التابعة لمسؤول الجمع: ${collector?.name || 'غير محدد'}.\nإدارة تطبيق ومن أحياها`;
-        fetch('http://localhost:3000/api/send-reminders', {
+        fetch(`${API_BASE_URL}/api/send-reminders`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'x-api-key': 'alayn_secret_2026_x7k9m2' },
           body: JSON.stringify({ messages: [{ chatId: existingUser.telegramChatId, text: msg }] })
@@ -1351,7 +1354,7 @@ const App = {
 
     try {
       this.toast('جاري الإرسال للمعالجة...', 'success');
-      const res = await fetch('http://localhost:3000/api/send-reminders', {
+      const res = await fetch(`${API_BASE_URL}/api/send-reminders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-api-key': 'alayn_secret_2026_x7k9m2' },
         body: JSON.stringify({ messages })
@@ -1387,7 +1390,7 @@ const App = {
     btn.disabled = true;
 
     try {
-      const res = await fetch('http://localhost:3000/api/auth-code', { 
+      const res = await fetch(`${API_BASE_URL}/api/auth-code`, { 
         method: 'POST',
         headers: { 'x-api-key': 'alayn_secret_2026_x7k9m2' }
       });
@@ -1412,7 +1415,7 @@ const App = {
       // Poll until linked — store IDs so navigate() can cancel them
       this._tgPollInterval = setInterval(async () => {
         try {
-          const pollRes = await fetch(`http://localhost:3000/api/check-auth/${code}`, {
+          const pollRes = await fetch(`${API_BASE_URL}/api/check-auth/${code}`, {
             headers: { 'x-api-key': 'alayn_secret_2026_x7k9m2' }
           });
           const pollData = await pollRes.json();
@@ -2343,7 +2346,7 @@ const App = {
       const donors = DB.getUsersByCollector(user.id).filter(d => d.telegramChatId);
       if (donors.length > 0) {
         try {
-          await fetch('http://localhost:3000/api/notify-location', {
+          await fetch(`${API_BASE_URL}/api/notify-location`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'x-api-key': 'alayn_secret_2026_x7k9m2' },
             body: JSON.stringify({
